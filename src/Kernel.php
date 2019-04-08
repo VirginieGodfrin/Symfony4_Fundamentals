@@ -50,7 +50,7 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/services_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
     // configureRoutes automatically loads everything from the config/routes.
-    // All of the files inside config/ either configure services or configure routes. No biggie.
+    // All of the files inside config/ either configure services or configure routes.
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = $this->getProjectDir().'/config';
