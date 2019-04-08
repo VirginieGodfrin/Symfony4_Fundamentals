@@ -24,6 +24,7 @@ class Kernel extends BaseKernel
         return $this->getProjectDir().'/var/log';
     }
 
+    // RegisterBundles load config/bundles.php file
     public function registerBundles()
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
@@ -33,7 +34,9 @@ class Kernel extends BaseKernel
             }
         }
     }
-
+    // ConfigureContainer: configure services
+    // Symfony is just a set of services and routes.
+    // It's uses some sort of $loader to load configuration files.
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $container->setParameter('container.autowiring.strict_mode', true);
@@ -46,7 +49,8 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/services'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/services_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
-
+    // configureRoutes automatically loads everything from the config/routes.
+    // All of the files inside config/ either configure services or configure routes. No biggie.
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = $this->getProjectDir().'/config';

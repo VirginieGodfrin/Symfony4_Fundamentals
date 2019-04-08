@@ -5,6 +5,8 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
+// This is the front controller.
+
 require __DIR__.'/../vendor/autoload.php';
 
 // The check is to ensure we don't use .env in production
@@ -37,3 +39,10 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+
+
+# the dev environment, Symfony uses a set of config that's... well... great for development: 
+# big errors, log everything and show me the web debug toolbar.
+# The prod environment uses a set of config that's optimized for speed, 
+# only logs errors, and hides technical info on error pages.
+
