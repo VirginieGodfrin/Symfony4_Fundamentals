@@ -3,4 +3,7 @@
 # when we add a new file to config clear the cache.
 knp_markdown:
     parser:
+        # the id service
         service: markdown.parser.light
+
+# when we use MarkdownInterface, Symfony will pass us a service whose id is markdown.parser.light.

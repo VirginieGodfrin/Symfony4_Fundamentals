@@ -14,6 +14,7 @@ framework:
     php_errors:
         log: true
 
+    
     cache:
         # Put the unique name of your app here: the prefix seed
         # is used to compute stable namespaces for cache keys.
@@ -27,4 +28,15 @@ framework:
         #default_redis_provider: redis://localhost
 
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-        #app: cache.adapter.apcu
+        # app: cache.adapter.apcu
+
+# See framework config:
+    #  ./bin/console config:dump framework
+    #  ./bin/console debug:config framework
+
+# The cache service is provided by the FrameworkBundle
+
+# Changing to an APCu Cache
+# It's an in-memory cache, it's already exists in the container.
+# To clear it : ./bin/console cache:pool:clear cache.app
+# If you want to work with APCu install it !
