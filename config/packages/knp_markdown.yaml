@@ -1,0 +1,6 @@
+# https://github.com/KnpLabs/KnpMarkdownBundle.
+# See the config : ./bin/console config:dump KnpMarkdownBundle.
+# when we add a new file to config clear the cache.
+knp_markdown:
+    parser:
+        service: markdown.parser.light
