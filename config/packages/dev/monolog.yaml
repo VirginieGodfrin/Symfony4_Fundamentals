@@ -1,3 +1,7 @@
+# Symfony uses a library called Monolog for logging.
+# And Monolog has a feature called channels, which are kind of like categories.
+# You can have many logger.
+# In the profiler, the main logger uses a channel called app.
 monolog:
     handlers:
         main:
@@ -5,6 +9,11 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
             channels: ["!event"]
+        markdown_logging:
+            type: stream
+            path: "%kernel.logs_dir%/markdown.log"
+            level: debug
+            channels: ["markdown"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

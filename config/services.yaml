@@ -25,3 +25,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    # because autowiring doesn't work for markdown_logging we need to declare it as argument in service's config
+    # So how can we tell Symfony to not pass us the "main" logger, but instead to pass us
+    # the monolog.logger.markdown service?
+    # monolog.logger.markdown is the id of the service use @
+    App\Service\MarkdownHelper:
+        arguments:
+            $logger: '@monolog.logger.markdown'
