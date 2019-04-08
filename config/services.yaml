@@ -10,6 +10,11 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $markdownLogger: '@monolog.logger.markdown'
+            # If you find any argument named $markdownLogger , pass this service to it.
+            # And because we added it to _defaults , it applies to all our services
+            # Instead of configuring our services one-by-one, we're creatingproject-wideconventions.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -29,7 +34,8 @@ services:
     # because autowiring doesn't work for markdown_logging we need to declare it as argument in service's config
     # So how can we tell Symfony to not pass us the "main" logger, but instead to pass us
     # the monolog.logger.markdown service?
-    # monolog.logger.markdown is the id of the service use @
-    App\Service\MarkdownHelper:
-        arguments:
-            $logger: '@monolog.logger.markdown'
+    # monolog.logger.markdown is the id of the service, use @
+    # Services Ids = Class Name
+    # App\Service\MarkdownHelper:
+    #     arguments:
+    #         $logger: '@monolog.logger.markdown'
