@@ -8,8 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
-use Michelf\MarkdownInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
+use App\Service\MarkdownHelper;
 
 class ArticleController extends AbstractController
 {
@@ -24,7 +23,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/news/{slug}", name="article_show")
      */
-    public function show($slug,  MarkdownInterface $markdown, AdapterInterface $cache)
+    public function show($slug, MarkdownHelper $markdownHelper)
     {
         // dump($markdown);die;
         // dump($cache);die;
@@ -46,29 +45,8 @@ Pancetta sausage t-bone **andouille** salami pastrami turkey. Spare ribs ham hoc
 
 **Tail short ribs rump swine short loin brisket prosciutto**, ham beef tenderloin. Burgdoggen ham spare ribs, leberkas chicken tri-tip tongue chuck rump capicola ribeye ham hock pork belly kielbasa. Chicken shankle cow burgdoggen salami ham brisket pork chop tenderloin prosciutto frankfurter pancetta cupim jerky picanha. **Sausage hamburger ground round prosciutto tri-tip pork loin pork belly**.
 EOF;
-        // Call the markdomn's transform method.
-        $articleContent = $markdown->transform($articleContent);
-
-        // The cache's service : both CacheItemPoolInterface and AdapterInterface have the same id : cache.app,
-        // and do the same work
-        // Symfony's cache service implements the PHP-standard cache interface, called PSR-6 
-        // (une meilleure interopérabilité entre les bibliothèques).
- 
-        // Creates a CacheItem object in memory that can help us fetch and save to the cache.
-            $item = $cache->getItem('markdown_'.md5($articleContent));
-        
-        // Check if this key is not already cached.
-        if (!$item->isHit()) {
-            // Put the item in to cache:
-                // Step1:$item->set()
-                $item->set($markdown->transform($articleContent));
-                // Step 2: $cache->save($item) :
-                $cache->save($item);
-        }
-
-        // Fetch the value from cache.
-        $articleContent = $item->get();
-        
+        // Call the parse methode from the markdownHelper service.
+        $articleContent = $markdownHelper->parse($articleContent);
 
         return $this->render('article/show.html.twig', [
             'title' => ucwords(str_replace('-', ' ', $slug)),
