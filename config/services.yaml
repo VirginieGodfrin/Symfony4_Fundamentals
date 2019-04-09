@@ -1,6 +1,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+# print parameter: php bin/console debug:container --parameters
 parameters:
+    cache_adapter: cache.adapter.apcu
 
 services:
     # default configuration for services in *this* file
@@ -15,6 +17,9 @@ services:
             # If you find any argument named $markdownLogger , pass this service to it.
             # And because we added it to _defaults , it applies to all our services
             # Instead of configuring our services one-by-one, we're creatingproject-wideconventions.
+            $isDebug: '%kernel.debug%'
+            # configure the argument for all services
+            # Kernel.debug That parameter is true most of the time, but is false in the prod environment.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -1,3 +1,7 @@
+# Create parameter
+# parameters:
+#     cache_adapter: cache.adapter.apcu
+
 framework:
     secret: '%env(APP_SECRET)%'
     #default_locale: en

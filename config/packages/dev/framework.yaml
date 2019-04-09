@@ -1,5 +1,3 @@
-# Changing the Cache in the dev Environment
-# With this config the env dev can use a different cache services than prod env
-framework:
-    cache:
-        app: cache.adapter.filesystem
+# Overriding a Parameter
+parameters:
+    cache_adapter: 'cache.adapter.filesystem'
