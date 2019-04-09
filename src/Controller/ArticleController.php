@@ -12,6 +12,13 @@ use App\Service\MarkdownHelper;
 
 class ArticleController extends AbstractController
 {
+    // Never forget Symfony 4.1, the base AbstractController will have a $this->getParameter() shortcut method.
+    // use constructor to get isDebug parameter only for fun !
+    private $isDebug;
+    public function __construct(bool $isDebug) {
+        dump($isDebug);
+    }
+
     /**
      * @Route("/", name="app_homepage")
      */
@@ -24,9 +31,8 @@ class ArticleController extends AbstractController
      * @Route("/news/{slug}", name="article_show")
      */
     public function show($slug, MarkdownHelper $markdownHelper)
-    {
-        // dump($markdown);die;
-        // dump($cache);die;
+    {   
+
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',

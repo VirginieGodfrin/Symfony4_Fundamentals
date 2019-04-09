@@ -20,6 +20,7 @@ services:
             $isDebug: '%kernel.debug%'
             # configure the argument for all services
             # Kernel.debug That parameter is true most of the time, but is false in the prod environment.
+            # Thanks to bind , we can define what values are passed to specific argument names
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
