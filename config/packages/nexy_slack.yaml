@@ -1,0 +1,12 @@
+# the is only one place for config : packages
+nexy_slack:
+
+    # If you want to use an another httplug client service.
+    http:
+        client: httplug.client
+
+    # The Slack API Incoming WebHooks URL.
+    # environment variable as a specific syntax: %env()%
+    # see all the env var : php bin/console about
+    endpoint: '%env(SLACK_WEBHOOK_ENDPOINT)%'
+    

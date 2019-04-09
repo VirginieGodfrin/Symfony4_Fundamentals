@@ -9,14 +9,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use App\Service\MarkdownHelper;
+use Nexy\Slack\Client;
 
 class ArticleController extends AbstractController
 {
-    // Never forget Symfony 4.1, the base AbstractController will have a $this->getParameter() shortcut method.
-    // use constructor to get isDebug parameter only for fun !
+    // In Symfony 3, services were defined as public. you need  $this->get() or $container->get() (AbstractController)
+    // in your controller to fetch a service by its id.
+    // In SF4  services are private, you need dependencie injection to push services in the controller
     private $isDebug;
-    public function __construct(bool $isDebug) {
+
+    private $slack;
+
+    public function __construct(bool $isDebug, Client $slack) {
         dump($isDebug);
+        $this->slack = $slack;
     }
 
     /**
@@ -31,7 +37,15 @@ class ArticleController extends AbstractController
      * @Route("/news/{slug}", name="article_show")
      */
     public function show($slug, MarkdownHelper $markdownHelper)
-    {   
+    { 
+
+        if ($slug === 'khaaaaaan') {
+            $message = $this->slack->createMessage()
+            ->from('Khan')
+            ->withIcon(':ghost:')
+            ->setText('Ah, Kirk, my old friend...');
+            $this->slack->sendMessage($message); 
+        } 
 
 
         $comments = [
