@@ -3,7 +3,8 @@
 #     cache_adapter: cache.adapter.apcu
 
 framework:
-    secret: '%env(APP_SECRET)%'
+    # Casting Environment Variables
+    secret: '%env(base64:APP_SECRET)%'
     #default_locale: en
     #csrf_protection: ~
     #http_method_override: true

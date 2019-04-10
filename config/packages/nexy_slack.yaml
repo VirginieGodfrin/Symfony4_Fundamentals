@@ -8,5 +8,7 @@ nexy_slack:
     # The Slack API Incoming WebHooks URL.
     # environment variable as a specific syntax: %env()%
     # see all the env var : php bin/console about
-    endpoint: '%env(SLACK_WEBHOOK_ENDPOINT)%'
+    # Casting Environment Variables
+    # https://symfony.com/blog/new-in-symfony-3-4-advanced-environment-variables
+    endpoint: '%env(string:SLACK_WEBHOOK_ENDPOINT)%'
     
