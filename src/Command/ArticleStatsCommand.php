@@ -16,24 +16,49 @@ class ArticleStatsCommand extends Command
 
     protected function configure()
     {
+        // Each command can have:
+            // a description 
+            // arguments: which are strings passed after the command andoptions
+            // option: prefixed with -- ex: --format=something
+        // add --help to any command to get all the info about it
         $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->setDescription('Hello, here is the article Stats')
+            ->addArgument('slug', InputArgument::OPTIONAL, 'The article\'s slug')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, 'Output format', 'text')
         ;
     }
 
+    // Notice that execute() has two arguments: 
+        // $input: lets us read arguments and options 
+        // $output: is all about printing things
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // SymfonyStyle : a full of fun fun methods !!
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        // Get the argument value
+        $slug = $input->getArgument('slug');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
+        // data for fun
+        $data = [
+            'slug' => $slug,
+            'hearts' => rand(10, 100),
+        ];
 
-        if ($input->getOption('option1')) {
-            // ...
+        // the logic:
+        // let do it with 
+            // php bin/console article:stats khaaaaaan
+            // php bin/console article:stats khaaaaaan --format=json
+        switch ($input->getOption('format')) { 
+            case 'text':
+                // fun fun mthd : print a list of thing
+                $io->listing($data);
+                break; 
+            case 'json':
+                // fun fun mthd : print raw text
+                $io->write(json_encode($data));
+                break;
+            default:
+                throw new \Exception('What kind of crazy format is that!?');
         }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
