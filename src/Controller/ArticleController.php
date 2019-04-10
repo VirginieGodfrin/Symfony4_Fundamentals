@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use App\Service\MarkdownHelper;
-use Nexy\Slack\Client;
+use App\Service\SlackClient;
 
 class ArticleController extends AbstractController
 {
@@ -18,11 +18,8 @@ class ArticleController extends AbstractController
     // In SF4  services are private, you need dependencie injection to push services in the controller
     private $isDebug;
 
-    private $slack;
-
-    public function __construct(bool $isDebug, Client $slack) {
+    public function __construct(bool $isDebug) {
         dump($isDebug);
-        $this->slack = $slack;
     }
 
     /**
@@ -36,17 +33,13 @@ class ArticleController extends AbstractController
     /**
      * @Route("/news/{slug}", name="article_show")
      */
-    public function show($slug, MarkdownHelper $markdownHelper)
+    public function show($slug, MarkdownHelper $markdownHelper, SlackClient $slack)
     { 
 
         if ($slug === 'khaaaaaan') {
-            $message = $this->slack->createMessage()
-            ->from('Khan')
-            ->withIcon(':ghost:')
-            ->setText('Ah, Kirk, my old friend...');
-            $this->slack->sendMessage($message); 
-        } 
-
+            // call the sendMessage methode from SlackClient service
+            $slack->sendMessage('Kahn', 'Ah, Kirk, my old friend...');
+        }
 
         $comments = [
             'I ate a normal rock once. It did NOT taste like bacon!',
